@@ -24,4 +24,19 @@ public class Type extends AbstractModel<Long> {
     @JsonIgnore
     private List<Movie> movieList;
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public List<Movie> getMovieList() {
+        return movieList;
+    }
+
+    public void setMovieList(List<Movie> movieList) {
+        this.movieList = movieList;
+    }
 }

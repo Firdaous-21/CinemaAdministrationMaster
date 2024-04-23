@@ -39,4 +39,44 @@ public class Seance extends AbstractModel<Long> {
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "Room_Id")
     private Room room;
+
+    public Date getDateProjection() {
+        return dateProjection;
+    }
+
+    public void setDateProjection(Date dateProjection) {
+        this.dateProjection = dateProjection;
+    }
+
+    public Date getBeginning_hour() {
+        return beginning_hour;
+    }
+
+    public void setBeginning_hour(Date beginning_hour) {
+        this.beginning_hour = beginning_hour;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
+    public Date getEnding_hour() {
+        return ending_hour;
+    }
+
+    public void setEnding_hour(Date ending_hour) {
+        this.ending_hour = ending_hour;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 }

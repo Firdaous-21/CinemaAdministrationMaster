@@ -55,7 +55,7 @@ public class MovieController {
 
     @GetMapping
     public String index() {
-        return "redirect:/Movie/1";
+        return "redirect:/movies/1";
     }
     @GetMapping(value = "/{pageNumber}")
     public String list(@PathVariable Integer pageNumber, Model model) {
@@ -71,31 +71,30 @@ public class MovieController {
         model.addAttribute("endIndex", end);
         model.addAttribute("currentIndex", current);
 
-        return "film/list";
+        return "movies/list";
 
     }
     @GetMapping("/add")
     public String add(Model model) {
-        model.addAttribute("Movie", new Movie());
+        model.addAttribute("movie", new Movie());
         model.addAttribute("listeNationalites", natService.getListAll());
-        model.addAttribute("listPersonnes",
-                personService.getListAll());
+        model.addAttribute("listPersonnes", personService.getListAll());
 
         model.addAttribute("listeGenres", typeService.getListAll());
-        return "film/form";
+        return "movies/form";
 
     }
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
-        model.addAttribute("film", movieService.get(id));
+        model.addAttribute("movie", movieService.get(id));
         model.addAttribute("listeGenres", typeService.getListAll());
         model.addAttribute("listPersonnes", typeService.getListAll());
         model.addAttribute("listeNationalites", natService.getListAll());
-        return "film/form";
+        return "movies/form";
 
     }
     @PostMapping(value = "/save")
-    public String save(@RequestParam("file") MultipartFile file, Movie film, final RedirectAttributes ra) {
+    public String save(@RequestParam("file") MultipartFile file, Movie movie, final RedirectAttributes ra) {
         // check if is there a file
         if (!file.isEmpty()) {
             // normalize the file path
@@ -107,7 +106,7 @@ public class MovieController {
                 FileUploadUtil.saveFile(uploadDir, uuid + fileName, file);
                 Media media = new Media();
                 media.setMedia("/photos/films/" + uuid + fileName);
-                media.setMovie(film);
+                media.setMovie(movie);
                 mediaService.save(media);
             } catch (IOException e) {
                 System.out.println("#####\nUpload Error:\n" + e);
@@ -115,16 +114,16 @@ public class MovieController {
             }
         }
 
-        Movie save = movieService.save(film);
+        Movie save = movieService.save(movie);
         ra.addFlashAttribute("success", save + " : Film Ajouté avec succès");
-        return "redirect:/film";
+        return "redirect:/movies";
     }
 
     @PostMapping(value = "/addActors")
-    public String addActors(Movie film, Model model, final RedirectAttributes ra) {
-       Movie filmToUpdate = movieService.get(film.getId());
+    public String addActors(Movie movie, Model model, final RedirectAttributes ra) {
+       Movie filmToUpdate = movieService.get(movie.getId());
         try {
-            filmToUpdate.setActeurs(film.getActeurs());
+            filmToUpdate.setActeurs(movie.getActeurs());
         } catch (Exception e) {
             System.out.println("#########\nAdd Actors Error:\n" + e);
             e.printStackTrace();
@@ -134,14 +133,14 @@ public class MovieController {
         model.addAttribute("listPersonnes", personService.getListAll());
 
         ra.addFlashAttribute("success", " Acteurs Ajoutés avec succès dans " + save);
-        return "film/details";
+        return "movies/details";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
 
         movieService.delete(id);
-        return "redirect:/film";
+        return "redirect:/movies";
 
     }
 
@@ -149,13 +148,13 @@ public class MovieController {
     public String showDetails(@PathVariable Long id, Model model) {
         model.addAttribute("film", movieService.get(id));
         model.addAttribute("listPersonnes", personService.getListAll());
-        return "film/details";
+        return "movies/details";
 
     }
 
     @GetMapping("/show/list")
     public String showPersons() {
-        return "/film/listNG";
+        return "/movies/listNG";
     }
 
     @GetMapping(path = "/NG/listp", produces = "application/json")

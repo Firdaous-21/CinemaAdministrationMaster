@@ -22,6 +22,22 @@ public class Nationality extends AbstractModel<Long> {
     @OneToMany(mappedBy = "nationality")
     private List<Person> personList;
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public List<Person> getPersonList() {
+        return personList;
+    }
+
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
+    }
+
     public String toString() {
         return this.label;
     }

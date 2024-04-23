@@ -92,5 +92,36 @@ public class Person extends AbstractModel<Long>{
         return this.prenom + " " + this.nom;
     }
 
+    public List<Movie> getMovies() {
+        return movies;
+    }
 
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
+
+    public List<Movie> getMoviesRealises() {
+        return moviesRealises;
+    }
+
+    public void setMoviesRealises(List<Movie> moviesRealises) {
+        this.moviesRealises = moviesRealises;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
 }
+

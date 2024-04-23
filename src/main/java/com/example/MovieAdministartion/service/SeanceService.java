@@ -1,16 +1,10 @@
 package com.example.MovieAdministartion.service;
 
-import com.example.MovieAdministartion.model.Room;
 import com.example.MovieAdministartion.model.Seance;
 import com.example.MovieAdministartion.repository.SeanceRepository;
-import com.example.MovieAdministartion.repository.CustumersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 import java.util.List;
