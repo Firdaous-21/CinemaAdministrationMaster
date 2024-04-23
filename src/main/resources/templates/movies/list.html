@@ -6,18 +6,18 @@
 </head>
 <body>
 <section layout:fragment="header">
-    <h1>Clients</h1>
-<ol class="breadcrumb">
-    <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-    <li class="active">Clients</li>
-</ol>
+    <h1>Movies List</h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li class="active">Movies</li>
+    </ol>
 </section>
 <div layout:fragment="content">
     <div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">Lists</h3>
             <div class="box-tools pull-right">
-                <a href="/persons/add" type="button" class="btn btn-box-tool"><i class="fa fa-plus"></i></a>
+                <a href="/movies/add" type="button" class="btn btn-box-tool"><i class="fa fa-plus"></i></a>
                 <br clear="all" />
             </div>
         </div>
@@ -25,29 +25,30 @@
             <table class="table table-striped">
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
-
+                    <th>Title</th>
+                    <th>Duration</th>
                     <th>Registration Date</th>
                     <th>Action</th>
                 </tr>
-                <tr th:each="row : ${list}">
+                <tr th:each="row : ${listMovies}">
                     <td th:text="${row.id}"></td>
-                    <td th:text="${row.nom + ' ' + row.prenom}"></td>
+                    <td th:text="${row.title}"></td>
+                    <td th:text="${row.duration}"></td>
                     <td th:text="${#dates.format(row.addedDate, 'dd/MM/yyyy')}"></td>
                     <td>
-                        <a th:href="${'/persons/edit/' + row.id}">Edit</a> |
-                        <a th:href="${'/persons/delete/' + row.id}">Delete</a>
+                        <a th:href="${'/movies/edit/' + row.id}">Edit</a> |
+                        <a th:href="${'/movies/delete/' + row.id}">Delete</a>
                     </td>
                 </tr>
             </table>
         </div>
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin pull-right">
-                <li><a href="/persons/1">First</a></li>
+                <li><a href="/movies/1">First</a></li>
                 <li th:each="p : ${#numbers.sequence(1, endIndex/beginIndex)}" th:class="${p == currentIndex} ? 'active' : ''">
-                    <a th:href="${'/persons/' + p}" th:text="${p}"></a>
+                    <a th:href="${'/movies/' + p}" th:text="${p}"></a>
                 </li>
-                <li><a th:href="${'/persons/' + endIndex}">Last</a></li>
+                <li><a th:href="${'/movies/' + endIndex}">Last</a></li>
             </ul>
         </div>
     </div>
