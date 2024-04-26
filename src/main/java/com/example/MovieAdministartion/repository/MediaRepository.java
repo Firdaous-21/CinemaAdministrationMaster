@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.example.MovieAdministartion.model.Media;
 
+import java.util.List;
+
 
 @CrossOrigin("http://localhost:4200")
 @Repository
