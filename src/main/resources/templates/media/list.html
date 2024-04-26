@@ -1,22 +1,22 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
 <head>
-    <title>Clients</title>
+    <title>Media List</title>
 </head>
 <body>
 <section layout:fragment="header">
-    <h1>Movies List</h1>
+    <h1>Media List</h1>
     <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Movies</li>
+        <li><a href="/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+        <li class="active">Media</li>
     </ol>
 </section>
 <div layout:fragment="content">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Lists</h3>
+            <h3 class="box-title">Media List</h3>
             <div class="box-tools pull-right">
-                <a href="/movies/add" type="button" class="btn btn-box-tool"><i class="fa fa-plus"></i></a>
+                <a href="/media/add" type="button" class="btn btn-box-tool"><i class="fa fa-plus"></i></a>
                 <br clear="all" />
             </div>
         </div>
@@ -24,30 +24,29 @@
             <table class="table table-striped">
                 <tr>
                     <th>ID</th>
-                    <th>Title</th>
-                    <th>Duration</th>
-                    <th>Registration Date</th>
+                    <th>Film Title</th>
+                    <th>Media Type</th>
+                    <th>Content</th>
                     <th>Action</th>
                 </tr>
-                <tr th:each="row : ${listMovies}">
+                <tr th:each="row : ${mediaList}">
                     <td th:text="${row.id}"></td>
-                    <td th:text="${row.title}"></td>
-                    <td th:text="${row.duration}"></td>
-                    <td th:text="${#dates.format(row.addedDate, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${row.movie.title}"></td>
+                    <td th:text="${row.typeMedia}"></td>
                     <td>
-                        <a th:href="${'/movies/edit/' + row.id}">Edit</a> |
-                        <a th:href="${'/movies/delete/' + row.id}">Delete</a>
+                        <a th:href="${'/media/edit/' + row.id}">Edit</a> |
+                        <a th:href="${'/media/delete/' + row.id}">Delete</a>
                     </td>
                 </tr>
             </table>
         </div>
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin pull-right">
-                <li><a href="/movies/1">First</a></li>
+                <li><a href="/media/">First</a></li>
                 <li th:each="p : ${#numbers.sequence(1, endIndex/beginIndex)}" th:class="${p == currentIndex} ? 'active' : ''">
-                    <a th:href="${'/movies/' + p}" th:text="${p}"></a>
+                    <a th:href="${'/media/' + p}" th:text="${p}"></a>
                 </li>
-                <li><a th:href="${'/movies/' + endIndex}">Last</a></li>
+                <li><a th:href="${'/media/' + endIndex}">Last</a></li>
             </ul>
         </div>
     </div>

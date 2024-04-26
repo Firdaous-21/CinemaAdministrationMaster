@@ -1,5 +1,6 @@
 package com.example.MovieAdministartion.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,21 +26,10 @@ public class Media extends AbstractModel<Long>{
     @Enumerated(EnumType.STRING)
     private TypeMedia typeMedia;
 
-    @Column(name = "added_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
-    private Date addedDate;
-
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "Movie_Id")
     private Movie movie;
-
-    public Date getAddedDate() {
-        return addedDate;
-    }
-
-    public void setAddedDate(Date addedDate) {
-        this.addedDate = addedDate;
-    }
 
     public String getMedia() {
         return media;

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Person</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row col-md-10">
+        <h2>Add Person</h2>
+    </div>
+    <form th:object="${personne}" th:action="@{/persons/save}" method="post" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="nom">Last Name</label>
+            <input type="text" class="form-control" th:field="*{nom}" id="nom" required>
+        </div>
+        <div class="form-group">
+            <label for="prenom">First Name</label>
+            <input type="text" class="form-control" th:field="*{prenom}" id="prenom" required>
+        </div>
+        <div class="form-group">
+            <label for="dateNaissance">Date of Birth</label>
+            <input type="date" class="form-control-file" th:field="*{dateNaissance}" id="dateNaissance" required>
+        </div>
+        <div class="form-group">
+            <label for="photo">Photos</label>
+            <input type="file" class="form-control"  id="photo" name="file"  accept=".jpg,.png,.pdf" required>
+        </div>
+        <div class="form-group">
+            <label for="typePersonne">Type</label>
+            <select class="form-control" th:field="*{typePersonne}" id="typePersonne" required>
+                <option th:each="type : ${T(com.example.MovieAdministartion.model.Person.TypePersonne).values()}"
+                        th:value="${type}" th:text="${type}">Select Type</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="nationality">Nationality</label>
+            <select class="form-control" th:field="*{nationality}" id="nationality" required>
+                <option th:each="nationality : ${listeNationalites}" th:value="${nationality.id}" th:text="${nationality.label}">Select Nationality</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Person</button>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

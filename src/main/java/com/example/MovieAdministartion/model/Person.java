@@ -79,11 +79,11 @@ public class Person extends AbstractModel<Long>{
     @JoinColumn(name="NATIONALITE_ID")
     private Nationality nationality;
 
-    @ManyToMany(mappedBy="acteurs", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy="acteurs")
     @JsonIgnore
     private List<Movie> movies;
 
-    @OneToMany(mappedBy = "realisateur", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "realisateur")
     @JsonIgnore
     private List<Movie> moviesRealises;
 

@@ -5,23 +5,18 @@ import com.example.MovieAdministartion.model.Movie;
 import com.example.MovieAdministartion.model.Media;
 import com.example.MovieAdministartion.service.*;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
 import java.util.UUID;
-
 @Controller
 @RequestMapping("persons")
 public class PersonController {
@@ -42,7 +37,7 @@ public class PersonController {
 
     @GetMapping
     public String index() {
-        return "redirect:/personne/1";
+        return "redirect:/persons/1";
     }
 
     @GetMapping(value = "/{pageNumber}")
@@ -58,15 +53,15 @@ public class PersonController {
         model.addAttribute("endIndex", end);
         model.addAttribute("currentIndex", current);
 
-        return "person/list";
+        return "persons/list";
 
     }
-
-    @GetMapping("/add")
+    @RequestMapping(value = "/add", method = {RequestMethod.GET, RequestMethod.POST})
     public String add(Model model) {
         model.addAttribute("personne", new Person());
         model.addAttribute("listeNationalites", natService.getListAll());
-        return "person/form";
+
+        return "persons/form";
 
     }
 
@@ -74,10 +69,10 @@ public class PersonController {
     public String edit(@PathVariable Long id, Model model) {
         model.addAttribute("personne", personService.get(id));
         model.addAttribute("listeNationalites", natService.getListAll());
-        return "person/form";
+        return "persons/form";
     }
 
-    @PostMapping(value = "/save")
+    @PostMapping("/save")
     public String save(@RequestParam("file") MultipartFile file, Person person, final RedirectAttributes ra) {
         //check if is there a file
         if (!file.isEmpty()) {
@@ -88,7 +83,7 @@ public class PersonController {
                 String uuid = UUID.randomUUID().toString();
                 String uploadDir = UPLOAD_DIR;
                 FileUploadUtil.saveFile(uploadDir, uuid + fileName, file);
-                person.setPhoto("/photos/personnes/" + uuid + fileName);
+               person.setPhoto("/photos/personnes/" + uuid + fileName);
             } catch (IOException e) {
                 System.out.println("#####\nUpload Error:\n" + e);
                 e.printStackTrace();
@@ -98,27 +93,24 @@ public class PersonController {
 
         Person save = personService.save(person);
         ra.addFlashAttribute("successFlash", "Personne " + save + " Ajoutée avec succès");
-        return "redirect:/personne";
+        return "redirect:/persons";
 
     }
-
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
 
         personService.delete(id);
-        return "redirect:/person";
-
+        return "redirect:/persons";
 
     }
-
     @GetMapping("/details/{id}")
     public String showDetails(@PathVariable Long id, Model model) {
         model.addAttribute("personne", personService.get(id));
-        return "person/details";
+        return "persons/details";
     }
     @GetMapping("/show/list")
     public String showPersons() {
-        return "/personne/listNG";
+        return "/persons/listNG";
     }
 
     @GetMapping(path="/NG/listp", produces = "application/json")

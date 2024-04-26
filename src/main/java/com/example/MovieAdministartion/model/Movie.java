@@ -60,10 +60,10 @@ public class Movie extends AbstractModel<Long>{
     @JsonIgnore
     private List<Seance> seances;
 
-    @OneToMany(mappedBy = "movie", cascade = {CascadeType.ALL})
-    @JsonIgnore
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Media> medias;
+ //   @OneToMany(mappedBy = "movie", cascade = {CascadeType.ALL})
+   // @JsonIgnore
+  //  @LazyCollection(LazyCollectionOption.FALSE)
+   // private List<Media> medias;
 
     @Column(name = "added_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
     private Date addedDate;
@@ -101,13 +101,6 @@ public class Movie extends AbstractModel<Long>{
         this.duration = duration;
     }
 
-    public List<Media> getMedias() {
-        return medias;
-    }
-
-    public void setMedias(List<Media> medias) {
-        this.medias = medias;
-    }
 
     public Nationality getNationality() {
         return nationality;
