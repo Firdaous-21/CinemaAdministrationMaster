@@ -17,7 +17,7 @@ public class RoomService extends AbstractService<Room,Long>{
     }
 
     public Page<Room> findPaginated(int page, int size) {
-        return roomRepository.findAll(PageRequest.of(page, size, Sort.by("capacite", "numero").descending()));
+        return roomRepository.findAll(PageRequest.of(page, size, Sort.by("capacity", "number").descending()));
     }
 
 }

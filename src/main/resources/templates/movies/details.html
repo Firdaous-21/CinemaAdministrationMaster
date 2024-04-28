@@ -1,17 +1,161 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="layout">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Details</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Film Details</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+
+        .details-box {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .box-header {
+            background-color: #60adff;
+            color: #fff;
+            padding: 15px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .box-title {
+            margin: 0;
+        }
+
+        .box-body {
+            padding: 20px;
+            display: flex; /* Display box-body as flex container */
+            flex-wrap: wrap; /* Allow items to wrap to the next line */
+        }
+
+        .box-body > div {
+            flex: 1; /* Make each child div take equal space */
+            margin: 10px; /* Add margin for spacing between elements */
+        }
+
+        .box-footer {
+            padding: 15px;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            background-color: #f7f7f7;
+            text-align: center; /* Center align the footer content */
+        }
+
+        .btn-back {
+            background-color: #60adff;
+            color: #fff;
+        }
+
+        .btn-back:hover {
+            background-color: #60adff;
+        }
+
+        /* Custom styles for image size */
+        .small-img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Style for media circle */
+        .media-circle {
+            width: 150px; /* Set width for the circle */
+            height: 150px; /* Set height for the circle */
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px; /* Add margin for spacing */
+        }
+
+        .media-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <div class="row col-md-10">
-        <h2>Movie's Details</h2>
+<section layout:fragment="header">
+    <div class="container">
+        <h1>Film Details</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/">Movies Details</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Details</li>
+            </ol>
+        </nav>
     </div>
+</section>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="details-box">
+            <div class="box-body">
+                <!-- Display media  -->
+                <div class="media-circle">
+                    <img th:src="@{${film.medias[0].media}}" alt="Film Media"/>
+                </div>
+            <div class="box-body">
+                <dl class="row">
+                    <dt class="col-sm-3">ID</dt>
+                    <dd class="col-sm-9" th:text="${film.id}"></dd>
+                    <dt class="col-sm-3">Titre</dt>
+                    <dd class="col-sm-9" th:text="${film.title}"></dd>
 
+                    <dt class="col-sm-3">Date of Added</dt>
+                    <dd class="col-sm-9" th:text="${film.addedDate}"></dd>
+                    <dt class="col-sm-3">Duree</dt>
+                    <dd class="col-sm-9" th:text="${film.duration}"></dd>
+                    <dt class="col-sm-3">Annee</dt>
+                    <dd class="col-sm-9" th:text="${film.year}"></dd>
+                    <dt class="col-sm-3">Nationality</dt>
+                    <dd class="col-sm-9" th:text="${film.nationality}"></dd>
+                    <dt class="col-sm-3">Genre</dt>
+                    <dd class="col-sm-9" th:text="${film.type.label}"></dd>
+                    <dt class="col-sm-3">Acteurs</dt>
+                    <dd class="col-sm-9" th:text="${film.acteurs}"></dd>
+                </dl>
+
+                <dt class="col-sm-3">Seances</dt>
+                <dd class="col-sm-9">
+
+                    <div th:each="seance: ${film.seances}">
+                        <li>
+                            <span th:text="${#dates.format(seance.dateProjection, 'dd-MM-yyyy')}"></span>
+                            <span> - </span>
+                            <span th:text="${#dates.format(seance.beginning_hour, 'HH:mm')}"></span>
+                            <span> to </span>
+                            <span th:text="${#dates.format(seance.ending_hour, 'HH:mm')}"></span>
+                        </li>
+                    </div>
+
+                </dd>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-3">Acteurs</div>
+                <div class="col-sm-9">
+                    <div th:each="acteur : ${film.acteurs}">
+                        <img th:src="@{${acteur.photo}}" class="img-fluid rounded small-img" alt="Acteur Photo"/>
+                        <span th:text="${acteur.prenom + ' ' + acteur.nom}"></span>
+                    </div>
+                </div>
+            </div>
+                <div class="box-footer">
+                    <a href="/movies" class="btn btn-back">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </body>
 </html>

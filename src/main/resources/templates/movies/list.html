@@ -25,18 +25,29 @@
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
+                    <th>Genre</th>
+                    <th>Director</th>
                     <th>Duration</th>
                     <th>Registration Date</th>
                     <th>Action</th>
                 </tr>
-                <tr th:each="row : ${listMovies}">
-                    <td th:text="${row.id}"></td>
-                    <td th:text="${row.title}"></td>
-                    <td th:text="${row.duration}"></td>
-                    <td th:text="${#dates.format(row.addedDate, 'dd/MM/yyyy')}"></td>
+                <tr th:each="film : ${listMovies}">
                     <td>
-                        <a th:href="${'/movies/edit/' + row.id}">Edit</a> |
-                        <a th:href="${'/movies/delete/' + row.id}">Delete</a>
+                        <a th:href="@{/movies/details/{id}(id=${film.id})}">
+                            <i class="fa fa-info-circle"></i>
+                            <span th:text="${film.id}"></span>
+                        </a>
+                </td>
+                <td th:each="row : ${listMovies}">
+                    <td th:text="${film.id}"></td>
+                    <td th:text="${film.title}"></td>
+                    <td th:text="${film.type.label}"></td>
+                    <td th:text="${film.realisateur != null} ? ${film.realisateur.nom} : 'Non renseigné'"></td>
+                    <td th:text="${film.duration}"></td>
+                    <td th:text="${#dates.format(film.addedDate, 'dd/MM/yyyy')}"></td>
+                    <td>
+                        <a th:href="${'/movies/edit/' + film.id}">Edit</a> |
+                        <a th:href="${'/movies/delete/' + film.id}">Delete</a>
                     </td>
                 </tr>
             </table>

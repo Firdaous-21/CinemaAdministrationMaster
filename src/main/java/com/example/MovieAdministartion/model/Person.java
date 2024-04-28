@@ -2,6 +2,10 @@ package com.example.MovieAdministartion.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -9,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "person")
+
 public class Person extends AbstractModel<Long>{
 
     private static final long serialVersionUID = -2974953413266908441L;
@@ -54,7 +59,6 @@ public class Person extends AbstractModel<Long>{
     }
 
     public enum TypePersonne {ACTEUR, REALISATEUR}
-
     @Column(nullable = false, length = 50)
     private String nom;
 
@@ -86,6 +90,7 @@ public class Person extends AbstractModel<Long>{
     @OneToMany(mappedBy = "realisateur")
     @JsonIgnore
     private List<Movie> moviesRealises;
+
 
 
     public String toString() {
@@ -123,5 +128,7 @@ public class Person extends AbstractModel<Long>{
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
+
+
 }
 

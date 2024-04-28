@@ -1,0 +1,50 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <title>Add Seance</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <h1>Add Seance</h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="/genre"><i class="fa fa-arrow-left"></i> Back to Genres</a></li>
+    </ol>
+</section>
+<div layout:fragment="content">
+    <div class="box">
+        <div class="box-body">
+            <form th:action="@{/seances/save}" method="post">
+                <div class="form-group">
+                    <label for="dateProjection">Date de projection:</label>
+                    <input type="date" id="dateProjection" name="dateProjection" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="heureDebut">Begin Hour</label>
+                    <input type="time" id="heureDebut" name="heureDebut" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="heureFin">End Hour</label>
+                    <input type="time" id="heureFin" name="heureFin" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="film">Film:</label>
+                    <select id="film" name="film" class="form-control" required>
+
+                        <option th:each="film : ${listFilms}" th:value="${film.id}" th:text="${film.title}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="salle">Salle:</label>
+                    <select id="salle" name="salle" class="form-control" required>
+                        <option th:each="salle : ${listSalles}" th:value="${salle.id}" th:text="${salle.number}"></option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Seance</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

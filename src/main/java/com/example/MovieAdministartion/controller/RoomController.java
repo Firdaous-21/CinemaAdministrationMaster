@@ -1,11 +1,8 @@
 package com.example.MovieAdministartion.controller;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-
 import com.example.MovieAdministartion.model.Room;
 import com.example.MovieAdministartion.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,26 +14,23 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
-@RequestMapping("room")
+@RequestMapping("rooms")
 public class RoomController {
-
 
         private RoomService salleService;
 
         @Autowired
         public void setSalleService(RoomService roomService) {
-            this.salleService = salleService;
+            this.salleService = roomService;
         }
-
         @GetMapping
         public String index() {
-            return "redirect:/salle/1";
+            return "redirect:/rooms/1";
         }
-
         @GetMapping(value = "/{pageNumber}")
         public String list(@PathVariable Integer pageNumber, Model model) {
             Page<Room> page = salleService.getList(pageNumber);
-            System.out.println("**************************\nTaille de la page : "+page.getNumber());
+          //  System.out.println("**************************\nTaille de la page : "+page.getNumber());
             int current = page.getNumber() + 1;
             int begin = Math.max(1, current - 5);
             int end = Math.min(begin + 10, page.getTotalPages());
@@ -46,32 +40,27 @@ public class RoomController {
             model.addAttribute("endIndex", end);
             model.addAttribute("currentIndex", current);
 
-            return "room/list";
-
+            return "rooms/list";
         }
-
         @GetMapping("/add")
         public String add(Model model) {
-
-            model.addAttribute("salle", new Room());
-            return "room/form";
+            model.addAttribute("room", new Room());
+            return "rooms/form";
 
         }
-
         @GetMapping("/edit/{id}")
         public String edit(@PathVariable Long id, Model model) {
 
-            model.addAttribute("salle", salleService.get(id));
-            return "salle/form";
+            model.addAttribute("room", salleService.get(id));
+            return "rooms/form";
 
         }
-
         @PostMapping(value = "/save")
         public String save(Room salle, final RedirectAttributes ra) {
 
             Room save = salleService.save(salle);
-            ra.addFlashAttribute("successFlash", "Salle "+save+" Ajoutée avec succès");
-            return "redirect:/room";
+            ra.addFlashAttribute("successFlash", "room "+save+" Ajoutée avec succès");
+            return "redirect:/rooms";
 
         }
 
@@ -79,13 +68,12 @@ public class RoomController {
         public String delete(@PathVariable Long id) {
 
             salleService.delete(id);
-            return "redirect:/salle";
-
+            return "redirect:/rooms";
         }
 
         @GetMapping("/list")
         public String showSalles() {
-            return "salle/list";
+            return "rooms/list";
         }
 
         @GetMapping(path = "/NG/listp", produces = "application/json")

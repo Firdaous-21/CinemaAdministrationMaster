@@ -15,10 +15,8 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+
+@Table(name = "movie")
 public class Movie extends AbstractModel<Long>{
     private static final long serialVersionUID = 2996009286487492970L;
     @Column(nullable = false)
@@ -60,10 +58,10 @@ public class Movie extends AbstractModel<Long>{
     @JsonIgnore
     private List<Seance> seances;
 
- //   @OneToMany(mappedBy = "movie", cascade = {CascadeType.ALL})
-   // @JsonIgnore
-  //  @LazyCollection(LazyCollectionOption.FALSE)
-   // private List<Media> medias;
+   @OneToMany(mappedBy = "movie", cascade = {CascadeType.ALL})
+     @JsonIgnore
+   @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Media> medias;
 
     @Column(name = "added_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
     private Date addedDate;

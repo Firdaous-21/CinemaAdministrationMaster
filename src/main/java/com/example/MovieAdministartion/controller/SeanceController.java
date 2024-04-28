@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("seance")
+@RequestMapping("seances")
 public class SeanceController {
     private MovieService filmService;
     private RoomService salleService;
@@ -49,7 +49,7 @@ public class SeanceController {
 
     @GetMapping
     public String index() {
-        return "redirect:/seance/1";
+        return "redirect:/seances/1";
     }
 
     @GetMapping(value = "/{pageNumber}")
@@ -66,7 +66,7 @@ public class SeanceController {
         model.addAttribute("endIndex", end);
         model.addAttribute("currentIndex", current);
 
-        return "seance/list";
+        return "seances/list";
 
     }
 
@@ -76,7 +76,7 @@ public class SeanceController {
         model.addAttribute("listeSeances", seanceService.getListAll());
         model.addAttribute("listFilms", filmService.getListAll());
         model.addAttribute("listSalles", salleService.getListAll());
-        return "seance/form";
+        return "seances/form";
 
     }
 
@@ -86,7 +86,7 @@ public class SeanceController {
         model.addAttribute("listeSeances", seanceService.getListAll());
         model.addAttribute("listFilms", filmService.getListAll());
         model.addAttribute("listSalles", salleService.getListAll());
-        return "seance/form";
+        return "seances/form";
 
     }
 
@@ -95,7 +95,7 @@ public class SeanceController {
 
         Seance save = seanceService.save(seance);
         ra.addFlashAttribute("success", save + " : Séance Ajoutée avec succès");
-        return "redirect:/seance/1";
+        return "redirect:/seances/1";
     }
 
     @PostMapping(value = "/addActors")
@@ -112,14 +112,14 @@ public class SeanceController {
         model.addAttribute("listPersonnes", personneService.getListAll());
 
         ra.addFlashAttribute("success", " Acteurs Ajoutés avec succès dans " + save);
-        return "film/details";
+        return "movies/details";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
 
         seanceService.delete(id);
-        return "redirect:/seance";
+        return "redirect:/seances";
 
     }
 
@@ -127,7 +127,7 @@ public class SeanceController {
     public String showDetails(@PathVariable Long id, Model model) {
         model.addAttribute("seance", seanceService.get(id));
         model.addAttribute("listSeances", seanceService.getListAll());
-        return "seance/details";
+        return "seances/details";
 
     }
 

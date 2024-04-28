@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.MovieAdministartion.model.Movie;
+import com.example.MovieAdministartion.model.Person;
 import com.example.MovieAdministartion.service.MovieService;
 import com.example.MovieAdministartion.service.NationalityService;
 import com.example.MovieAdministartion.service.PersonService;
@@ -65,10 +66,15 @@ public class MovieController {
         model.addAttribute("movie", new Movie());
         model.addAttribute("listeNationalites", natService.getListAll());
         model.addAttribute("listPersonnes", personService.getListAll());
+        model.addAttribute("listRealisateurs",
+                personService.getListAll().stream().filter( p ->
+                        p.getTypePersonne().equals(Person.TypePersonne.REALISATEUR)));
+        model.addAttribute("listActeurs",
+                personService.getListAll().stream().filter( p ->
+                        p.getTypePersonne().equals(Person.TypePersonne.ACTEUR)));
         model.addAttribute("listeGenres", typeService.getListAll());
         return "movies/form";
     }
-
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
         model.addAttribute("movie", movieService.get(id));
@@ -77,7 +83,6 @@ public class MovieController {
         model.addAttribute("listeNationalites", natService.getListAll());
         return "movies/form";
     }
-
     @PostMapping(value = "/save")
     public String save(Movie movie, final RedirectAttributes ra) {
         Movie save = movieService.save(movie);
@@ -99,7 +104,6 @@ public class MovieController {
         ra.addFlashAttribute("success", " Acteurs Ajoutés avec succès dans " + save);
         return "movies/details";
     }
-
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         movieService.delete(id);
@@ -110,6 +114,7 @@ public class MovieController {
     public String showDetails(@PathVariable Long id, Model model) {
         model.addAttribute("film", movieService.get(id));
         model.addAttribute("listPersonnes", personService.getListAll());
+        model.addAttribute("listSeances", movieService.getListAll());
         return "movies/details";
     }
 
