@@ -31,27 +31,4 @@ public class Media extends AbstractModel<Long>{
     @JoinColumn(name = "Movie_Id")
     private Movie movie;
 
-    public String getMedia() {
-        return media;
-    }
-
-    public void setMedia(String media) {
-        this.media = media;
-    }
-
-    public Movie getMovie() {
-        return movie;
-    }
-
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
-
-    public TypeMedia getTypeMedia() {
-        return typeMedia;
-    }
-
-    public void setTypeMedia(TypeMedia typeMedia) {
-        this.typeMedia = typeMedia;
-    }
 }

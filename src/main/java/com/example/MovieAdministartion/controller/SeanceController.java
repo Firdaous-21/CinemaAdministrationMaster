@@ -117,7 +117,6 @@ public class SeanceController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-
         seanceService.delete(id);
         return "redirect:/seances";
 

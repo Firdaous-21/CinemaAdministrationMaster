@@ -1,50 +1,49 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="layout">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Seance</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add seance</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<section layout:fragment="header">
-    <h1>Add Seance</h1>
-    <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="/genre"><i class="fa fa-arrow-left"></i> Back to Genres</a></li>
-    </ol>
-</section>
-<div layout:fragment="content">
-    <div class="box">
-        <div class="box-body">
-            <form th:action="@{/seances/save}" method="post">
-                <div class="form-group">
-                    <label for="dateProjection">Date de projection:</label>
-                    <input type="date" id="dateProjection" name="dateProjection" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="heureDebut">Begin Hour</label>
-                    <input type="time" id="heureDebut" name="heureDebut" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="heureFin">End Hour</label>
-                    <input type="time" id="heureFin" name="heureFin" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="film">Film:</label>
-                    <select id="film" name="film" class="form-control" required>
-
-                        <option th:each="film : ${listFilms}" th:value="${film.id}" th:text="${film.title}"></option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="salle">Salle:</label>
-                    <select id="salle" name="salle" class="form-control" required>
-                        <option th:each="salle : ${listSalles}" th:value="${salle.id}" th:text="${salle.number}"></option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Add Seance</button>
-            </form>
-        </div>
+<div class="container">
+    <div class="row col-md-10">
+        <h2>Add Seance</h2>
     </div>
+    <form th:object="${seance}" th:action="@{/seances/save}" method="post" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="Date">Date Projection</label>
+            <input type="date" class="form-control" th:field="*{dateProjection}" id="date" name="date" required>
+        </div>
+        <div class="form-group">
+            <label for="duree">begin Hour</label>
+            <input type="time" class="form-control" th:field="*{beginning_hour}" id="duree" name="duree" required>
+        </div>
+        <div class="form-group">
+            <label for="end">Ending Hour</label>
+            <input type="time" class="form-control" th:field="*{ending_hour}" id="end" name="end" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Genre">Movie</label>
+            <select class="form-control" th:field="*{movie}" id="genre" required>
+                <option th:each="movie : ${listFilms}" th:value="${movie.id}" th:text="${movie.title}">Select movie</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="nationality">Room</label>
+            <select class="form-control" th:field="*{room}" id="nationality" required>
+                <option th:each="room : ${listSalles}" th:value="${room.id}" th:text="${room.number}">Select room</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

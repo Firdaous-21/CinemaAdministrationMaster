@@ -26,13 +26,16 @@
                     <th>ID</th>
                     <th>Film Title</th>
                     <th>Media Type</th>
-                    <th>Content</th>
+                    <th>Media </th>
                     <th>Action</th>
                 </tr>
                 <tr th:each="row : ${mediaList}">
                     <td th:text="${row.id}"></td>
                     <td th:text="${row.movie.title}"></td>
                     <td th:text="${row.typeMedia}"></td>
+                    <td>
+                        <img th:src="@{${row.media}}" width="100" height="80" alt="Media Image" />
+                    </td>
                     <td>
                         <a th:href="${'/media/edit/' + row.id}">Edit</a> |
                         <a th:href="${'/media/delete/' + row.id}">Delete</a>

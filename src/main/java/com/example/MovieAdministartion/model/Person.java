@@ -13,7 +13,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "person")
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class Person extends AbstractModel<Long>{
 
     private static final long serialVersionUID = -2974953413266908441L;
@@ -87,7 +88,7 @@ public class Person extends AbstractModel<Long>{
     @JsonIgnore
     private List<Movie> movies;
 
-    @OneToMany(mappedBy = "realisateur")
+   @OneToMany(mappedBy = "realisateur")
     @JsonIgnore
     private List<Movie> moviesRealises;
 

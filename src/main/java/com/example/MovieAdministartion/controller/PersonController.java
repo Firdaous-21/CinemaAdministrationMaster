@@ -89,8 +89,6 @@ public class PersonController {
                 e.printStackTrace();
             }
         }
-
-
         Person save = personService.save(person);
         ra.addFlashAttribute("successFlash", "Personne " + save + " Ajoutée avec succès");
         return "redirect:/persons";

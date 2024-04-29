@@ -34,13 +34,6 @@
 
         .box-body {
             padding: 20px;
-            display: flex; /* Display box-body as flex container */
-            flex-wrap: wrap; /* Allow items to wrap to the next line */
-        }
-
-        .box-body > div {
-            flex: 1; /* Make each child div take equal space */
-            margin: 10px; /* Add margin for spacing between elements */
         }
 
         .box-footer {
@@ -48,7 +41,6 @@
             border-bottom-left-radius: 8px;
             border-bottom-right-radius: 8px;
             background-color: #f7f7f7;
-            text-align: center; /* Center align the footer content */
         }
 
         .btn-back {
@@ -62,23 +54,16 @@
 
         /* Custom styles for image size */
         .small-img {
-            max-width: 100%;
+            max-width: 150px;
             height: auto;
+            border-radius: 50%; /* Display media images as circles */
         }
 
-        /* Style for media circle */
-        .media-circle {
-            width: 150px; /* Set width for the circle */
-            height: 150px; /* Set height for the circle */
-            border-radius: 50%;
-            overflow: hidden;
-            margin: 0 auto 20px; /* Add margin for spacing */
-        }
-
-        .media-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .actor-img {
+            max-width: 50px; /* Set the width of actor images */
+            height: auto;
+            border-radius: 5px; /* Display actor images as small squares */
+            margin-right: 5px; /* Add some space between actor images */
         }
     </style>
 </head>
@@ -98,64 +83,72 @@
 <div layout:fragment="content">
     <div class="container">
         <div class="details-box">
-            <div class="box-body">
-                <!-- Display media  -->
-                <div class="media-circle">
-                    <img th:src="@{${film.medias[0].media}}" alt="Film Media"/>
-                </div>
+            <div class="box-header">
+                <h3 class="box-title">Details</h3>
+            </div>
+
             <div class="box-body">
                 <dl class="row">
-                    <dt class="col-sm-3">ID</dt>
-                    <dd class="col-sm-9" th:text="${film.id}"></dd>
+                    <dt class="col-sm-3">Medias</dt>
+                    <dd class="col-sm-9">
+                        <div th:each="media : ${film.medias}">
+                            <img th:src="@{${media.media}}" class="img-fluid rounded small-img" alt="Media"/>
+                        </div>
+                    </dd>
                     <dt class="col-sm-3">Titre</dt>
                     <dd class="col-sm-9" th:text="${film.title}"></dd>
 
-                    <dt class="col-sm-3">Date of Added</dt>
+                    <dt class="col-sm-3">Date </dt>
                     <dd class="col-sm-9" th:text="${film.addedDate}"></dd>
-                    <dt class="col-sm-3">Duree</dt>
+                    <dt class="col-sm-3">Duration</dt>
                     <dd class="col-sm-9" th:text="${film.duration}"></dd>
                     <dt class="col-sm-3">Annee</dt>
                     <dd class="col-sm-9" th:text="${film.year}"></dd>
                     <dt class="col-sm-3">Nationality</dt>
-                    <dd class="col-sm-9" th:text="${film.nationality}"></dd>
+                    <dd class="col-sm-9" th:text="${film.nationality.label}"></dd>
                     <dt class="col-sm-3">Genre</dt>
                     <dd class="col-sm-9" th:text="${film.type.label}"></dd>
-                    <dt class="col-sm-3">Acteurs</dt>
-                    <dd class="col-sm-9" th:text="${film.acteurs}"></dd>
-                </dl>
-
-                <dt class="col-sm-3">Seances</dt>
-                <dd class="col-sm-9">
-
-                    <div th:each="seance: ${film.seances}">
-                        <li>
-                            <span th:text="${#dates.format(seance.dateProjection, 'dd-MM-yyyy')}"></span>
-                            <span> - </span>
-                            <span th:text="${#dates.format(seance.beginning_hour, 'HH:mm')}"></span>
-                            <span> to </span>
-                            <span th:text="${#dates.format(seance.ending_hour, 'HH:mm')}"></span>
-                        </li>
-                    </div>
-
-                </dd>
+                    </dd>
             </div>
+            <dt class="col-sm-3">Seances</dt>
+            <dd class="col-sm-9">
+                <div th:each="seance: ${film.seances}">
+                    <li>
+                        <span th:text="${#dates.format(seance.dateProjection, 'dd-MM-yyyy')}"></span>
+                        <span> - </span>
+                        <span th:text="${#dates.format(seance.beginning_hour, 'HH:mm')}"></span>
+                        <span> to </span>
+                        <span th:text="${#dates.format(seance.ending_hour, 'HH:mm')}"></span>
+                    </li>
+                </div>
 
-
+            </dd>
             <div class="row">
-                <div class="col-sm-3">Acteurs</div>
+                <div class="col-sm-3"><strong>Actors</strong></div>
                 <div class="col-sm-9">
                     <div th:each="acteur : ${film.acteurs}">
-                        <img th:src="@{${acteur.photo}}" class="img-fluid rounded small-img" alt="Acteur Photo"/>
+                        <img th:src="@{${acteur.photo}}" class="img-fluid rounded actor-img" alt="Movie"/>
                         <span th:text="${acteur.prenom + ' ' + acteur.nom}"></span>
                     </div>
                 </div>
             </div>
-                <div class="box-footer">
-                    <a href="/movies" class="btn btn-back">Back to List</a>
+            <div class="row">
+                <div class="col-sm-3"><strong>Director</strong></div>
+                <div class="col-sm-9">
+                    <div th:each="director : ${film.realisateur}">
+                        <img th:src="@{${director.photo}}" class="img-fluid rounded actor-img" alt="Director Photo"/>
+                        <span th:text="${director.prenom + ' ' + director.nom}"></span>
+                    </div>
                 </div>
+            </div>
+
+            <div class="box-footer">
+                <a href="/movies" class="btn btn-back">Back to List</a>
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </body>
 </html>

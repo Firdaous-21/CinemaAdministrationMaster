@@ -1,14 +1,15 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
 <head>
-    <title>Movies</title>
+    <title>Clients</title>
 </head>
 <body>
 <section layout:fragment="header">
     <h1>Movies List</h1>
     <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Movies</li>
+        <li class="active">Persons</li>
     </ol>
 </section>
 <div layout:fragment="content">
@@ -25,29 +26,35 @@
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
+                    <th>Year</th>
                     <th>Genre</th>
-                    <th>Director</th>
-                    <th>Duration</th>
-                    <th>Registration Date</th>
+                    <th>Nationality</th>
+                    <th>Realisateur</th>
+                    <th>Acteur</th>
+                    <th>Regestration Date</th>
+                    <th>Media</th>
                     <th>Action</th>
                 </tr>
-                <tr th:each="film : ${listMovies}">
+                <tr th:each="row : ${listMovies}">
                     <td>
-                        <a th:href="@{/movies/details/{id}(id=${film.id})}">
+                        <a th:href="@{/movies/details/{id}(id=${row.id})}">
                             <i class="fa fa-info-circle"></i>
-                            <span th:text="${film.id}"></span>
+                            <span th:text="${row.id}"></span>
                         </a>
-                </td>
-                <td th:each="row : ${listMovies}">
-                    <td th:text="${film.id}"></td>
-                    <td th:text="${film.title}"></td>
-                    <td th:text="${film.type.label}"></td>
-                    <td th:text="${film.realisateur != null} ? ${film.realisateur.nom} : 'Non renseigné'"></td>
-                    <td th:text="${film.duration}"></td>
-                    <td th:text="${#dates.format(film.addedDate, 'dd/MM/yyyy')}"></td>
+                    </td>
+                    <td th:text="${row.title}"></td>
+                    <td th:text="${row.year}"></td>
+                    <td th:text="${row.type.label}"></td>
+                    <td th:text="${row.nationality}"></td>
+                    <td th:text="${row.realisateur}"></td>
+                    <td th:text="${row.acteurs}"></td>
+                    <td th:text="${#dates.format(row.addedDate, 'dd/MM/yyyy')}"></td>
                     <td>
-                        <a th:href="${'/movies/edit/' + film.id}">Edit</a> |
-                        <a th:href="${'/movies/delete/' + film.id}">Delete</a>
+                        <img th:src="@{${row.medias}}" width="100" height="80" alt="Media Image" />
+                    </td>
+                    <td>
+                        <a th:href="${'/movies/edit/' + row.id}">Edit</a>
+                        <a th:href="${'/movies/delete/' + row.id}">Delete</a>
                     </td>
                 </tr>
             </table>

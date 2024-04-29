@@ -28,6 +28,7 @@
                     <th>Capacity</th>
                     <th>Seances</th>
                     <th>Registration Date</th>
+                    <th>Action</th>
 
                 </tr>
                 <tr th:each="row : ${listSalles}">
@@ -45,6 +46,10 @@
                     </td>
                     <td th:text="${#dates.format(row.addedDate, 'dd/MM/yyyy')}"></td>
                     <td>
+                    <td>
+                        <a th:href="${'/rooms/edit/' + row.id}">Edit</a> |
+                        <a th:href="${'/rooms/delete/' + row.id}">Delete</a>
+                    </td>
                 </tr>
             </table>
         </div>

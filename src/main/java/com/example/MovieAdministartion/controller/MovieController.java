@@ -61,17 +61,17 @@ public class MovieController {
 
         return "movies/list";
     }
+
     @GetMapping("/add")
     public String add(Model model) {
         model.addAttribute("movie", new Movie());
         model.addAttribute("listeNationalites", natService.getListAll());
         model.addAttribute("listPersonnes", personService.getListAll());
-        model.addAttribute("listRealisateurs",
+       model.addAttribute("listRealisateurs",
                 personService.getListAll().stream().filter( p ->
-                        p.getTypePersonne().equals(Person.TypePersonne.REALISATEUR)));
-        model.addAttribute("listActeurs",
-                personService.getListAll().stream().filter( p ->
-                        p.getTypePersonne().equals(Person.TypePersonne.ACTEUR)));
+                       p.getTypePersonne().equals(Person.TypePersonne.REALISATEUR)));
+       model.addAttribute("listActeurs",
+               personService.getListAll().stream().filter( p -> p.getTypePersonne().equals(Person.TypePersonne.ACTEUR)));
         model.addAttribute("listeGenres", typeService.getListAll());
         return "movies/form";
     }
@@ -80,6 +80,11 @@ public class MovieController {
         model.addAttribute("movie", movieService.get(id));
         model.addAttribute("listeGenres", typeService.getListAll());
         model.addAttribute("listPersonnes", typeService.getListAll());
+        model.addAttribute("listRealisateurs",
+                personService.getListAll().stream().filter( p ->
+                        p.getTypePersonne().equals(Person.TypePersonne.REALISATEUR)));
+        model.addAttribute("listActeurs",
+                personService.getListAll().stream().filter( p -> p.getTypePersonne().equals(Person.TypePersonne.ACTEUR)));
         model.addAttribute("listeNationalites", natService.getListAll());
         return "movies/form";
     }

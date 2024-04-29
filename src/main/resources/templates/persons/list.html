@@ -30,6 +30,7 @@
                     <th>Date of Birth</th>
                     <th>Type</th>
                     <th>Nationality</th>
+                    <th>photo</th>
                     <th>Added Date</th>
                     <th>Action</th>
                 </tr>
@@ -40,6 +41,9 @@
                     <td th:text="${#dates.format(row.dateNaissance, 'dd/MM/yyyy')}"></td>
                     <td th:text="${row.typePersonne}"></td>
                     <td th:text="${row.nationality.label}"></td>
+                    <td>
+                        <img th:src="@{${row.photo}}" width="100" height="80" alt="Media Image" />
+                    </td>
                     <td th:text="${#dates.format(row.addedDate, 'dd/MM/yyyy')}"></td>
                     <td>
                         <a th:href="${'/persons/edit/' + row.id}">Edit</a> |

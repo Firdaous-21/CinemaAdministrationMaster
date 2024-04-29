@@ -28,7 +28,7 @@ public class MediaController {
     @Autowired
     private MediaService mediaService;
      private MovieService movieService;
-    private final String UPLOAD_DIR = "/src/main/resources/static/media/";
+    private final String UPLOAD_DIR = "/src/main/resources/static/photos/films/";
 
     @Autowired
     public void setMovieService(MovieService movieService) {
@@ -61,6 +61,12 @@ public class MediaController {
         model.addAttribute("listMovies" ,movieService.getListAll());
         return "media/form";
     }
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Long id, Model model) {
+        model.addAttribute("media", mediaService.get(id));
+        model.addAttribute("listMovies", movieService.getListAll());
+        return "media/form";
+    }
     @PostMapping("/save")
     public String save(@RequestParam("file") MultipartFile file, Media media, final RedirectAttributes ra) {
         //check if is there a file
@@ -72,7 +78,7 @@ public class MediaController {
                 String uuid = UUID.randomUUID().toString();
                 String uploadDir = UPLOAD_DIR;
                 FileUploadUtil.saveFile(uploadDir, uuid + fileName, file);
-                media.setMedia("/media/" + uuid + fileName);
+                media.setMedia("/photos/films/" + uuid + fileName);
             } catch (IOException e) {
                 System.out.println("#####\nUpload Error:\n" + e);
                 e.printStackTrace();
@@ -86,7 +92,7 @@ public class MediaController {
         @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         mediaService.delete(id);
-        return "redirect:/media";
+        return "redirect:/media/1";
     }
 
     @GetMapping("/details/{id}")
